@@ -82,6 +82,24 @@ class Service implements \t3lib_Singleton {
         $this->setCustomParameter("MemoryUsage-PeakSize", memory_get_peak_usage());
     }
 
+
+    /**
+     *
+     */
+    protected function getRootline() {
+        if (!isset($GLOBALS['TSFE'])) {
+            return '';
+        }
+
+        $rootlineTitles = array();
+
+        foreach($GLOBALS['TSFE']->rootLine as $level) {
+            $rootlineTitles[] = $level['title'];
+        }
+
+        return implode('/', array_reverse($rootlineTitles));
+    }
+
     /**
      * adds some flags based from TSFE object
      */
@@ -89,15 +107,21 @@ class Service implements \t3lib_Singleton {
         if (!isset($GLOBALS['TSFE'])) {
             return;
         }
+
+        $this->addTransactionNamePostfix( $this->getRootline() );
+
         $tsfe = $GLOBALS['TSFE'];
         if ($tsfe->no_cache) {
             $this->setCustomParameter("TYPO3-NOCACHE", 1);
+            $this->addTransactionNamePostfix('NOCACHE');
         }
         if ($tsfe->isINTincScript()) {
             $this->setCustomParameter("TYPO3-INTincScript", 1);
+            $this->addTransactionNamePostfix('INTincScript');
         }
         if ($tsfe->isClientCachable) {
             $this->setCustomParameter("TYPO3-ClientCacheable", 1);
+            $this->addTransactionNamePostfix('ClientCacheable');
         }
         if (isset($tsfe->pageCacheTags) && is_array($tsfe->pageCacheTags)) {
             $this->setCustomParameter('X-CacheTags',implode('|', $tsfe->pageCacheTags).'|');
@@ -106,6 +130,7 @@ class Service implements \t3lib_Singleton {
         $frontEndUser = $GLOBALS['TSFE']->fe_user;
         if ($this->isFrontendUserActive($frontEndUser)) {
             $this->setCustomParameter('FrontendUser','yes');
+            $this->addTransactionNamePostfix('FrontendUser');
         }
         else {
             $this->setCustomParameter('FrontendUser','no');
