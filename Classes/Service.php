@@ -93,10 +93,10 @@ class Service implements \t3lib_Singleton {
         if ($tsfe->no_cache) {
             $this->setCustomParameter("TYPO3-NOCACHE", 1);
         }
-        if ($tsfe->isINTincScript) {
+        if ($tsfe->isINTincScript()) {
             $this->setCustomParameter("TYPO3-INTincScript", 1);
         }
-        if ($tsfe->isClientCacheable) {
+        if ($tsfe->isClientCachable) {
             $this->setCustomParameter("TYPO3-ClientCacheable", 1);
         }
         if (isset($tsfe->pageCacheTags) && is_array($tsfe->pageCacheTags)) {
