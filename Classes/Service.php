@@ -51,6 +51,9 @@ class Service implements \t3lib_Singleton {
             return;
         }
         $name = "TYPO3 Portal";
+        if (isset($_SERVER["HTTP_HOST"]) && !empty($_SERVER["HTTP_HOST"])) {
+            $name = $_SERVER["HTTP_HOST"];
+        }
         if (isset($this->configuration['appname']) && !empty($this->configuration['appname'])) {
             $name = $this->configuration['appname'];
         }
