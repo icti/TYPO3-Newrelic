@@ -1,7 +1,5 @@
 <?php
 
-namespace AOE\Newrelic;
-
 /**
  * Class Service
  * Usage:
@@ -9,7 +7,7 @@ namespace AOE\Newrelic;
  *  $service->setTransactionName('Product Single View');
  * @package AOE\Newrelic
  */
-class Service implements \t3lib_Singleton {
+class Tx_Newrelic_Service implements t3lib_Singleton {
 
     /**
      * @var array
@@ -159,11 +157,11 @@ class Service implements \t3lib_Singleton {
      * adds some env variables
      */
     public function addCommonRequestParameters() {
-        $this->setCustomParameter("REQUEST_URI", \t3lib_div::getIndpEnv('REQUEST_URI'));
-        $this->setCustomParameter("REMOTE_ADDR", \t3lib_div::getIndpEnv('REMOTE_ADDR'));
-        $this->setCustomParameter("HTTP_USER_AGENT", \t3lib_div::getIndpEnv('HTTP_USER_AGENT'));
-        $this->setCustomParameter("SCRIPT_FILENAME", \t3lib_div::getIndpEnv('SCRIPT_FILENAME'));
-        $this->setCustomParameter("TYPO3_SSL", \t3lib_div::getIndpEnv('TYPO3_SSL'));
+        $this->setCustomParameter("REQUEST_URI", t3lib_div::getIndpEnv('REQUEST_URI'));
+        $this->setCustomParameter("REMOTE_ADDR", t3lib_div::getIndpEnv('REMOTE_ADDR'));
+        $this->setCustomParameter("HTTP_USER_AGENT", t3lib_div::getIndpEnv('HTTP_USER_AGENT'));
+        $this->setCustomParameter("SCRIPT_FILENAME", t3lib_div::getIndpEnv('SCRIPT_FILENAME'));
+        $this->setCustomParameter("TYPO3_SSL", t3lib_div::getIndpEnv('TYPO3_SSL'));
     }
 
     /**
